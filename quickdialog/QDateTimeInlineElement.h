@@ -25,6 +25,8 @@
 @property(nonatomic, retain) NSDate *dateValue;
 @property(nonatomic, assign) NSNumber *ticksValue;
 
+@property(nonatomic, assign) NSString* dateString;  // Hsoi 11-Sep-2012 - added
+
 @property (assign) UIDatePickerMode mode;
 
 @property(nonatomic) BOOL centerLabel;

@@ -14,6 +14,8 @@
 @synthesize items = _items;
 @synthesize valueParser = _valueParser;
 @synthesize onValueChanged = _onValueChanged;
+@dynamic itemsString;  // Hsoi 11-Sep-2012 - added
+
 
 - (QPickerElement *)init
 {
@@ -62,6 +64,22 @@
         [selectedIndexes addObject:[NSNumber numberWithInteger:[_pickerView selectedRowInComponent:component]]];
     }
     return selectedIndexes;
+}
+
+
+// Hsoi 11-Sep-2012 - added
+- (NSString*)itemsString
+{
+    NSMutableArray*     items = [NSMutableArray array];
+    NSArray*            indexes = [self selectedIndexes];
+    NSInteger           numComponents = _pickerView.numberOfComponents;
+    
+    for (int component = 0; component < numComponents; component++) {
+        [items addObject:[_pickerView.delegate pickerView:_pickerView titleForRow:[[indexes objectAtIndex:component] integerValue] forComponent:component]];
+    }
+    
+    NSString* str = [items componentsJoinedByString:@","];
+    return str;
 }
 
 @end

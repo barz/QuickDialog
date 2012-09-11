@@ -14,6 +14,8 @@
 @property (nonatomic, strong) NSArray *items;
 @property (nonatomic, readonly) NSArray *selectedIndexes;
 
+@property (nonatomic, readonly) NSString* itemsString; // Hsoi 11-Sep-2012 - added
+
 - (QPickerElement *)initWithTitle:(NSString *)title items:(NSArray *)items value:(id)value;
 
 @end

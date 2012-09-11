@@ -13,6 +13,8 @@
 //
 
 #import "QDateEntryTableViewCell.h"
+#import "ISO8601DateFormatter.h"
+
 
 @implementation QDateTimeInlineElement {
 @private
@@ -20,7 +22,6 @@
     NSDate *_minimumDate;
 
     void (^_onValueChanged)();
-
 }
 
 @synthesize dateValue = _dateValue;
@@ -29,6 +30,7 @@
 @synthesize maximumDate = _maximumDate;
 @synthesize minimumDate = _minimumDate;
 @synthesize onValueChanged = _onValueChanged;
+@dynamic dateString; // Hsoi 11-Sep-2012 - added
 
 
 - (QDateTimeInlineElement *)init {
@@ -60,6 +62,30 @@
 -(NSNumber *)ticksValue {
     return [NSNumber numberWithDouble:[self.dateValue timeIntervalSince1970]];
 }
+
+
+// Hsoi 11-Sep-2012 - added
+- (NSString*)dateString {
+    ISO8601DateFormatter*   dateFormatter = [[ISO8601DateFormatter alloc] init];
+    
+    BOOL    includeTime = (self.mode == UIDatePickerModeDateAndTime || self.mode == UIDatePickerModeTime);
+    dateFormatter.includeTime = includeTime;
+    
+    NSString*               str = [dateFormatter stringFromDate:self.dateValue];    
+    return str;
+}
+
+
+// Hsoi 11-Sep-2012 - added
+- (void)setDateString:(NSString*)inDateString {
+    ISO8601DateFormatter*   dateFormatter = [[ISO8601DateFormatter alloc] init];
+    
+    BOOL    includeTime = (self.mode == UIDatePickerModeDateAndTime || self.mode == UIDatePickerModeTime);
+    dateFormatter.includeTime = includeTime;
+
+    self.dateValue = [dateFormatter dateFromString:inDateString];
+}
+
 
 - (QDateTimeInlineElement *)initWithDate:(NSDate *)date {
     return [self initWithTitle:nil date:date];
