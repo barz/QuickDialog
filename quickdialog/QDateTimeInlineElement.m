@@ -68,7 +68,34 @@
 - (NSString*)dateString {
     ISO8601DateFormatter*   dateFormatter = [[ISO8601DateFormatter alloc] init];
     
-    BOOL    includeTime = (self.mode == UIDatePickerModeDateAndTime || self.mode == UIDatePickerModeTime);
+    ISO8601DateFormat   format;
+    BOOL                includeTime;
+    switch (self.mode) {
+        case UIDatePickerModeDateAndTime: {
+            format = ISO8601DateFormatCalendar;
+            includeTime = YES;
+            break;
+        }
+            
+        case UIDatePickerModeDate: {
+            format = ISO8601DateFormatCalendar;
+            includeTime = NO;
+            break;
+        }
+            
+        case UIDatePickerModeTime: {
+            format = ISO8601DateFormatTimeOnly;
+            includeTime = YES;
+            break;
+        }
+            
+        case UIDatePickerModeCountDownTimer: {
+            NSAssert(false, @"UIDatePickerModeCountDownTimer unsupported");
+            break;
+        }
+    }
+    
+    dateFormatter.format = format;
     dateFormatter.includeTime = includeTime;
     
     NSString*               str = [dateFormatter stringFromDate:self.dateValue];    
@@ -80,7 +107,34 @@
 - (void)setDateString:(NSString*)inDateString {
     ISO8601DateFormatter*   dateFormatter = [[ISO8601DateFormatter alloc] init];
     
-    BOOL    includeTime = (self.mode == UIDatePickerModeDateAndTime || self.mode == UIDatePickerModeTime);
+    ISO8601DateFormat   format;
+    BOOL                includeTime;
+    switch (self.mode) {
+        case UIDatePickerModeDateAndTime: {
+            format = ISO8601DateFormatCalendar;
+            includeTime = YES;
+            break;
+        }
+            
+        case UIDatePickerModeDate: {
+            format = ISO8601DateFormatCalendar;
+            includeTime = NO;
+            break;
+        }
+            
+        case UIDatePickerModeTime: {
+            format = ISO8601DateFormatTimeOnly;
+            includeTime = YES;
+            break;
+        }
+            
+        case UIDatePickerModeCountDownTimer: {
+            NSAssert(false, @"UIDatePickerModeCountDownTimer unsupported");
+            break;
+        }
+    }
+    
+    dateFormatter.format = format;
     dateFormatter.includeTime = includeTime;
 
     self.dateValue = [dateFormatter dateFromString:inDateString];
