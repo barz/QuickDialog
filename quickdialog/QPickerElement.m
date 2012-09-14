@@ -103,18 +103,23 @@
     if (_pickerView == nil) {
         self.cachedItemsString = itemsString;
     } else {
+        
+        // Hsoi 14-Sep-2012 - if the itemsString is nil, reset to the first item.
+        
         NSArray* items = [itemsString componentsSeparatedByString:@","];
-        for (NSUInteger i = 0; i < [items count]; i++) {
+        for (NSUInteger i = 0; i < [_pickerView numberOfComponents]; i++) {
             NSString* item = [items objectAtIndex:i];
             
             NSInteger numRows = [_pickerView numberOfRowsInComponent:i];
+            NSInteger rowToSelect = 0;
             for (NSInteger x = 0; x < numRows; x++) {
                 NSString* rowString = [_pickerView.delegate pickerView:_pickerView titleForRow:x forComponent:i];
                 if ([item isEqualToString:rowString]) {
-                    [_pickerView selectRow:x inComponent:i animated:NO];
+                    rowToSelect = x;
                     break;
                 }
             }
+            [_pickerView selectRow:rowToSelect inComponent:i animated:NO];
         }
     }
 }
