@@ -64,7 +64,21 @@ NSDictionary *QRootBuilderStringToTypeConversionDict;
 }
 
 - (void)updateObject:(id)element withPropertiesFrom:(NSDictionary *)dict {
-    for (NSString *key in dict.allKeys){
+    
+    // Hsoi 14-Sep-2012 - I'm not sure what to do here. I'm trying to add support for some elements to set
+    // not just the "items" but the "selectedItems"... so whatever the content is for the element, then
+    // some initial setting for it, like QRadioElement. While there's a way to do this, the problem
+    // is that some things depend on other things FIRST getting set. So for example, if the selectedItems
+    // are set but items hasn't yet been set, then selectedItems won't work out.
+    //
+    // I'm not really sure what to do about this....
+    //
+    // But as a lame hack, I'm going to force the keys to be sorted from A-Z. That really isn't a
+    // right way, but it will work out for us.
+    
+    NSArray* allSortedKeys = [dict.allKeys sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+
+    for (NSString *key in allSortedKeys){
         if ([key isEqualToString:@"type"] || [key isEqualToString:@"sections"]|| [key isEqualToString:@"elements"])
             continue;
 
