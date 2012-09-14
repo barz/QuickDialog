@@ -10,7 +10,6 @@
 {
 @private
     NSArray *_items;
-    void (^_onValueChanged)();
     
     UIPickerView *_pickerView;
 }
@@ -20,7 +19,6 @@
 @synthesize onValueChanged = _onValueChanged;
 @dynamic selectedItemsString;  // Hsoi 11-Sep-2012 - added
 @synthesize cachedItemsString;
-
 
 - (QPickerElement *)init
 {
