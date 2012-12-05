@@ -48,10 +48,12 @@
     [cell prepareForElement:self inTableView:tableView pickerView:&pickerView];
     _pickerView = pickerView;
     
+    NSString* resetString = nil;
     if (self.cachedItemsString != nil) {
-        [self setSelectedItemsString:self.cachedItemsString];
+        resetString = self.cachedItemsString;
         self.cachedItemsString = nil;
     }
+    [self setSelectedItemsString:resetString];
     
     cell.imageView.image = self.image;
     
@@ -90,7 +92,13 @@
     NSInteger           numComponents = _pickerView.numberOfComponents;
     
     for (int component = 0; component < numComponents; component++) {
-        [items addObject:[_pickerView.delegate pickerView:_pickerView titleForRow:[[indexes objectAtIndex:component] integerValue] forComponent:component]];
+        NSInteger rowIndex = [[indexes objectAtIndex:component] integerValue];
+        if (rowIndex >= 0) {
+            [items addObject:[_pickerView.delegate pickerView:_pickerView titleForRow:rowIndex forComponent:component]];
+        }
+        else {
+            return nil;
+        }
     }
     
     NSString* str = [items componentsJoinedByString:@","];
@@ -105,10 +113,16 @@
     } else {
         
         // Hsoi 14-Sep-2012 - if the itemsString is nil, reset to the first item.
+        //
+        // Hsoi 05-Dec-2012 - If itemsString is @"", reset to -1... before the first item, to basically say
+        // "we have no items selected... yet".
         
         NSArray* items = [itemsString componentsSeparatedByString:@","];
         for (NSUInteger i = 0; i < [_pickerView numberOfComponents]; i++) {
-            NSString* item = [items objectAtIndex:i];
+            NSString* item = nil;
+            if (i < items.count) {
+                item = [items objectAtIndex:i];
+            }
             
             NSInteger numRows = [_pickerView numberOfRowsInComponent:i];
             NSInteger rowToSelect = 0;

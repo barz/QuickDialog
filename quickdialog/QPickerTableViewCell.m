@@ -35,6 +35,7 @@ NSString * const QPickerTableViewCellIdentifier = @"QPickerTableViewCell";
     _textField.hidden = YES;
 }
 
+
 - (QPickerElement *)pickerElement
 {
     return (QPickerElement *)_entryElement;
@@ -70,6 +71,9 @@ NSString * const QPickerTableViewCellIdentifier = @"QPickerTableViewCell";
     _pickerView.delegate = self;
     
     *pickerView = _pickerView;
+
+    self.pickerElement.value = [self getPickerViewValue];
+    [self prepareForElement:_entryElement inTableView:_quickformTableView];
 }
 
 - (void)prepareForElement:(QEntryElement *)element inTableView:(QuickDialogTableView *)tableView
