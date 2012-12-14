@@ -54,6 +54,7 @@
         self.cachedItemsString = nil;
     }
     [self setSelectedItemsString:resetString];
+    [cell prepareForElement:self inTableView:tableView];
     
     cell.imageView.image = self.image;
     
@@ -135,6 +136,20 @@
             }
             [_pickerView selectRow:rowToSelect inComponent:i animated:NO];
         }
+        
+        // Hsoi 14-Dec-2012 - now that the display's been set, ensure our internal value corresponds
+        NSMutableArray *componentsValues = [NSMutableArray array];
+        for (int i = 0; i < _pickerView.numberOfComponents; i++)
+        {
+            NSInteger rowIndex = [_pickerView selectedRowInComponent:i];
+            if (rowIndex >= 0) {
+                [componentsValues addObject:[_pickerView.delegate pickerView:_pickerView titleForRow:rowIndex forComponent:i]];
+            } else {
+                [componentsValues addObject:[NSNull null]];
+            }
+        }
+        
+        self.value = [self.valueParser objectFromComponentsValues:componentsValues];
     }
 }
 
