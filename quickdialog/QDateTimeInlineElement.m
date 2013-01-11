@@ -14,7 +14,8 @@
 
 #import "QDateEntryTableViewCell.h"
 #import "ISO8601DateFormatter.h"
-
+#import "QDateTimeInlineElement.h"
+#import "QuickDialog.h"
 
 @implementation QDateTimeInlineElement {
 @private
@@ -57,6 +58,10 @@
 
 - (void)setTicksValue:(NSNumber *)ticks {
     self.dateValue = [NSDate dateWithTimeIntervalSince1970:ticks.doubleValue];
+}
+
+- (void)setDateValue:(NSDate *)date {
+    _dateValue = date;
 }
 
 -(NSNumber *)ticksValue {
@@ -152,10 +157,13 @@
         cell = [[QDateEntryTableViewCell alloc] init];
     }
     [cell prepareForElement:self inTableView:tableView];
+    cell.selectionStyle = self.enabled ? UITableViewCellSelectionStyleBlue : UITableViewCellSelectionStyleNone;
+    cell.textField.enabled = self.enabled;
+    cell.textField.userInteractionEnabled = self.enabled;
+    cell.textLabel.textColor = self.enabled ? [UIColor blackColor] : [UIColor lightGrayColor];
     cell.imageView.image = self.image;
-    cell.selectionStyle = UITableViewCellSelectionStyleBlue ;
+    cell.labelingPolicy = self.labelingPolicy;
     return cell;
-
 }
 
 - (void)fetchValueIntoObject:(id)obj {
@@ -163,5 +171,6 @@
 		return;
     [obj setValue:_dateValue forKey:_key];
 }
+
 
 @end

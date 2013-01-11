@@ -11,9 +11,10 @@
 // ANY KIND, either express or implied. See the License for the specific language governing
 // permissions and limitations under the License.
 //
-#import "QSection.h"
+
 #import "QTableViewCell.h"
 
+@class QSection;
 @class QuickDialogTableView;
 @class QuickDialogController;
 
@@ -25,16 +26,21 @@
     NSString *_bind;
 	
 	CGFloat _height;
+    BOOL _hidden;
 
     void (^_onSelected)(void);
     NSString * _controllerAction;
 }
+
+@property (nonatomic, assign, getter=isEnabled) BOOL enabled;
 
 @property(nonatomic, copy) void (^onSelected)(void);
 @property(nonatomic, retain) NSString *controllerAction;
 @property(nonatomic, retain) NSString *controllerAccessoryAction;
 
 @property(nonatomic) CGFloat height;
+@property(nonatomic) BOOL    hidden;
+@property(nonatomic,readonly) NSUInteger visibleIndex;
 
 @property(nonatomic, assign) QSection *parentSection;
 
@@ -45,6 +51,8 @@
 @property (nonatomic) QLabelingPolicy labelingPolicy;
 
 - (QElement *)initWithKey:(NSString *)key;
+
+- (NSIndexPath*) getIndexPath;
 
 - (UITableViewCell *)getCellForTableView:(QuickDialogTableView *)tableView controller:(QuickDialogController *)controller;
 

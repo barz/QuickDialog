@@ -13,6 +13,8 @@
 //
 
 
+#import "QRootBuilder.h"
+
 NSDictionary *QRootBuilderStringToTypeConversionDict;
 
 @interface QRootBuilder ()
@@ -141,6 +143,16 @@ NSDictionary *QRootBuilderStringToTypeConversionDict;
 
 - (void)initializeMappings {
     QRootBuilderStringToTypeConversionDict = [[NSDictionary alloc] initWithObjectsAndKeys:
+
+                    [[NSDictionary alloc] initWithObjectsAndKeys:
+                                [NSNumber numberWithInt:QPresentationModeNormal], @"Normal",
+                                [NSNumber numberWithInt:QPresentationModeNavigationInPopover], @"NavigationInPopover",
+                                [NSNumber numberWithInt:QPresentationModeModalForm], @"ModalForm",
+                                [NSNumber numberWithInt:QPresentationModePopover], @"Popover",
+                               [NSNumber numberWithInt:QPresentationModeModalFullScreen], @"ModalFullScreen",
+                               [NSNumber numberWithInt:QPresentationModeModalPage], @"ModalPage",
+                                nil], @"presentationMode",
+
 
                     [[NSDictionary alloc] initWithObjectsAndKeys:
                         [NSNumber numberWithInt:UITextAutocapitalizationTypeNone], @"None",
