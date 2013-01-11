@@ -12,8 +12,11 @@
 // permissions and limitations under the License.
 //
 
-@implementation QEntryElement
-
+#import "QEntryElement.h"
+#import "QuickDialog.h"
+@implementation QEntryElement  {
+    __unsafe_unretained QuickDialogController *_controller;
+}
 
 @synthesize textValue = _textValue;
 @synthesize placeholder = _placeholder;
@@ -56,9 +59,11 @@
     if (cell==nil){
         cell = [[QEntryTableViewCell alloc] init];
     }
+    _controller = controller;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.textField.enabled = YES;
-    cell.textField.userInteractionEnabled = YES;
+    cell.textField.enabled = self.enabled;
+    cell.textField.userInteractionEnabled = self.enabled;
+    cell.textLabel.textColor = self.enabled ? [UIColor blackColor] : [UIColor lightGrayColor];
     cell.textField.textAlignment = self.textAlignment;
     cell.imageView.image = self.image;
     [cell prepareForElement:self inTableView:tableView];
@@ -70,6 +75,11 @@
 
 }
 
+- (void) fieldDidEndEditing
+{
+    [self handleElementSelected:_controller];
+}
+
 - (void)fetchValueIntoObject:(id)obj {
 	if (_key==nil)
 		return;
@@ -78,7 +88,12 @@
 }
 
 - (BOOL)canTakeFocus {
-    return YES;
+	if (self.hidden) {
+		return NO;
+	}
+	else {
+		return YES;
+	}
 }
 
 #pragma mark - UITextInputTraits

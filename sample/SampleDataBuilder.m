@@ -518,9 +518,8 @@
     multiline.title = @"Multiline entry";
     [multilineSection addElement:multiline];
 
-
-    [root addSection:traitsSection];
     [root addSection:multilineSection];
+    [root addSection:traitsSection];
     
     return root;
 }
@@ -668,6 +667,7 @@
     [sectionElements addElement:[self createEntryRoot]];
     [sectionElements addElement:[self createSlidersRoot]];
     [sectionElements addElement:[self createRadioRoot]];
+    [sectionElements addElement:[[QRootElement alloc] initWithJSONFile:@"navigation"]];
     [sectionElements addElement:[self createPickerRoot]];
     [sectionElements addElement:[self createSelectRoot]];
     [sectionElements addElement:[self createWebAndMapRoot]];
@@ -677,6 +677,17 @@
     [sectionElements addElement:[self createDynamicSectionRoot]];
 	[sectionElements addElement:[self createWithInitDefault]];
 	[sectionElements addElement:[self createWithInitAndKey]];
+
+    QRootElement *samplesDisabled = (QRootElement *)[self createSampleControls];
+    samplesDisabled.title = @"Disabled Elements";
+    for(QSection *section in samplesDisabled.sections)
+    {
+        for(QElement *element in section.elements)
+        {
+            element.enabled = NO;
+        }
+    }
+    [sectionElements addElement:samplesDisabled];
 
     [root addSection:sectionSamples];
     [root addSection:sectionElements];
@@ -698,4 +709,5 @@
 
     return root;
 }
+
 @end

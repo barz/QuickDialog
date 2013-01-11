@@ -14,13 +14,15 @@
 
 #import <objc/message.h>
 
+#import "QBooleanElement.h"
+#import "QuickDialogController.h"
+
 @implementation QBooleanElement {
     __unsafe_unretained QuickDialogController *_controller;
 }
 @synthesize onImage = _onImage;
 @synthesize offImage = _offImage;
 @synthesize boolValue = _boolValue;
-@synthesize enabled = _enabled;
 
 
 - (QBooleanElement *)init {
@@ -33,6 +35,14 @@
     self.boolValue = value;
     self.enabled = YES;
     return self;
+}
+
+-(void)setNumberValue:(NSNumber *)number {
+    self.boolValue = number.boolValue;
+}
+
+-(NSNumber *)numberValue {
+    return [NSNumber numberWithBool:self.boolValue];
 }
 
 - (void)setOnImageName:(NSString *)name {
@@ -101,6 +111,9 @@
     self.boolValue = ((UISwitch *)boolSwitch).on;
     if ((_controller != nil && self.controllerAction != nil) || _onSelected != nil) {
         [self handleElementSelected:_controller];
+    }
+    if (self.onValueChanged!=nil){
+        self.onValueChanged();
     }
 }
 

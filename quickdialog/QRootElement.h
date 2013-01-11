@@ -15,6 +15,16 @@
 #import "QElement.h"
 #import "QSection.h"
 
+
+typedef enum  {
+    QPresentationModeNormal = 0,
+    QPresentationModePopover,
+    QPresentationModeNavigationInPopover,
+    QPresentationModeModalForm,
+    QPresentationModeModalFullScreen,
+    QPresentationModeModalPage
+} QPresentationMode;
+
 @interface QRootElement : QElement {
 
 @protected
@@ -34,6 +44,8 @@
 @property(nonatomic, copy) void (^onValueChanged)(void);
 
 @property(nonatomic, copy) NSString *emptyMessage;
+@property(nonatomic) QPresentationMode presentationMode;
+
 
 - (QRootElement *)init;
 
@@ -41,6 +53,9 @@
 - (QSection *)getSectionForIndex:(NSInteger)index;
 - (NSInteger)numberOfSections;
 
+- (QSection *)getVisibleSectionForIndex:(NSInteger)index;
+- (NSInteger)visibleNumberOfSections;
+- (NSUInteger)getVisibleIndexForSection: (QSection*)section;
 
 - (void)fetchValueIntoObject:(id)obj;
 

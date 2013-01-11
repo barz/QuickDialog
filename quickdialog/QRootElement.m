@@ -13,10 +13,13 @@
 //
 
 #import "QBindingEvaluator.h"
+#import "QRootElement.h"
+#import "QuickDialog.h"
 
 @implementation QRootElement {
 @private
     NSDictionary *_sectionTemplate;
+    QPresentationMode _presentationMode;
     void (^_onValueChanged)();
 }
 
@@ -28,11 +31,13 @@
 @synthesize sectionTemplate = _sectionTemplate;
 @synthesize emptyMessage = _emptyMessage;
 @synthesize onValueChanged = _onValueChanged;
+@synthesize presentationMode = _presentationMode;
 
 
 - (QRootElement *)init {
     self = [super init];
     return self;
+
 }
 - (void)addSection:(QSection *)section {
     if (_sections==nil)
@@ -48,6 +53,38 @@
 
 - (NSInteger)numberOfSections {
     return [_sections count];
+}
+
+- (QSection *)getVisibleSectionForIndex:(NSInteger)index
+{
+    for (QSection * q in _sections)
+    {
+        if (!q.hidden && index-- == 0)
+            return q;
+    }
+    return nil;
+}
+- (NSInteger)visibleNumberOfSections
+{
+    NSUInteger c = 0;
+    for (QSection * q in _sections)
+    {
+        if (!q.hidden)
+            c++;
+    }
+    return c;
+}
+- (NSUInteger)getVisibleIndexForSection: (QSection*)section
+{
+    NSUInteger c = 0;
+    for (QSection * q in _sections)
+    {
+        if (q == section)
+            return c;
+        if (!q.hidden)
+            ++c;
+    }
+    return NSNotFound;
 }
 
 - (UITableViewCell *)getCellForTableView:(QuickDialogTableView *)tableView controller:(QuickDialogController *)controller {
@@ -76,10 +113,10 @@
 }
 
 - (void)fetchValueUsingBindingsIntoObject:(id)obj {
+    [super fetchValueUsingBindingsIntoObject:obj];
     for (QSection *s in _sections){
         [s fetchValueUsingBindingsIntoObject:obj];
     }
-    [super fetchValueUsingBindingsIntoObject:obj];
 }
 
 - (void)bindToObject:(id)data {
