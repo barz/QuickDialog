@@ -113,11 +113,12 @@ NSString * const QPickerTableViewCellIdentifier = @"QPickerTableViewCell";
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
+    if (self.pickerElement.onValueChanged != nil) {
+        self.pickerElement.onValueChanged(self.pickerElement);
+    }
+
     self.pickerElement.value = [self getPickerViewValue];
     [self prepareForElement:_entryElement inTableView:_quickformTableView];
-    if (self.pickerElement.onValueChanged != nil) {
-        self.pickerElement.onValueChanged();
-    }
 }
 
 #pragma mark - Getting/setting value from UIPickerView
@@ -144,7 +145,7 @@ NSString * const QPickerTableViewCellIdentifier = @"QPickerTableViewCell";
 {
     NSArray *componentsValues = [self.pickerElement.valueParser componentsValuesFromObject:value];
     
-    for (int componentIndex = 0; componentIndex < componentsValues.count && _pickerView.numberOfComponents; componentIndex++)
+    for (int componentIndex = 0; componentIndex < componentsValues.count && componentIndex < _pickerView.numberOfComponents; componentIndex++)
     {
         id componentValue = [componentsValues objectAtIndex:(NSUInteger) componentIndex];
         NSInteger rowIndex = [[self.pickerElement.items objectAtIndex:componentIndex] indexOfObject:componentValue];

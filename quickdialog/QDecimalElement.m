@@ -39,15 +39,15 @@
     return self;
 }
 
+
 - (UITableViewCell *)getCellForTableView:(QuickDialogTableView *)tableView controller:(QuickDialogController *)controller {
 
     QDecimalTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"QuickformDecimalElement"];
     if (cell==nil){
         cell = [[QDecimalTableViewCell alloc] init];
     }
+    self.keyboardType = UIKeyboardTypeDecimalPad;
     [cell prepareForElement:self inTableView:tableView];
-
-    cell.textLabel.textColor = self.enabled ? [UIColor blackColor] : [UIColor lightGrayColor];
     cell.textField.userInteractionEnabled = self.enabled;
 
     return cell;

@@ -33,7 +33,6 @@
     if (self){
         self.autocapitalizationType = UITextAutocapitalizationTypeSentences;
         self.autocorrectionType = UITextAutocorrectionTypeDefault;
-        self.textAlignment = UITextAlignmentLeft;
         self.keyboardType = UIKeyboardTypeDefault;
         self.keyboardAppearance = UIKeyboardAppearanceDefault;
         self.returnKeyType = UIReturnKeyDefault;
@@ -59,12 +58,13 @@
     if (cell==nil){
         cell = [[QEntryTableViewCell alloc] init];
     }
+
+    [cell applyAppearanceForElement:self];
     _controller = controller;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.textField.enabled = self.enabled;
     cell.textField.userInteractionEnabled = self.enabled;
-    cell.textLabel.textColor = self.enabled ? [UIColor blackColor] : [UIColor lightGrayColor];
-    cell.textField.textAlignment = self.textAlignment;
+    cell.textField.textAlignment = self.appearance.entryAlignment;
     cell.imageView.image = self.image;
     [cell prepareForElement:self inTableView:tableView];
     return cell;
@@ -100,7 +100,6 @@
 
 @synthesize autocorrectionType = _autocorrectionType;
 @synthesize autocapitalizationType = _autocapitalizationType;
-@synthesize textAlignment = _textAlignment;
 @synthesize keyboardType = _keyboardType;
 @synthesize keyboardAppearance = _keyboardAppearance;
 @synthesize returnKeyType = _returnKeyType;
