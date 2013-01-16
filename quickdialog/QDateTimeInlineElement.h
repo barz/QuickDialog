@@ -19,6 +19,7 @@
     NSDate * _dateValue;
 @private
     UIDatePickerMode _mode;
+    NSInteger _minuteInterval;
     BOOL _centerLabel;
 }
 
@@ -28,6 +29,8 @@
 @property(nonatomic, assign) NSString* dateString;  // Hsoi 11-Sep-2012 - added
 
 @property (assign) UIDatePickerMode mode;
+
+@property (assign) NSInteger minuteInterval;
 
 @property(nonatomic) BOOL centerLabel;
 

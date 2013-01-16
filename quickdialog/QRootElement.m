@@ -20,7 +20,6 @@
 @private
     NSDictionary *_sectionTemplate;
     QPresentationMode _presentationMode;
-    void (^_onValueChanged)();
 }
 
 
@@ -32,6 +31,7 @@
 @synthesize emptyMessage = _emptyMessage;
 @synthesize onValueChanged = _onValueChanged;
 @synthesize presentationMode = _presentationMode;
+@synthesize preselectedElementIndex = _preselectedElementIndex;
 
 
 - (QRootElement *)init {
@@ -45,6 +45,12 @@
 
     [_sections addObject:section];
     section.rootElement = self;
+}
+
++ (QRootElement *)rootForJSON:(NSString *)jsonFileName withObject:(id)object {
+    QRootElement *root = [self rootForJSON:jsonFileName];
+    root.object = object;
+    return root;
 }
 
 - (QSection *)getSectionForIndex:(NSInteger)index {
@@ -160,5 +166,10 @@
         }
     }
     return nil;
+}
+
+- (QRootElement *)rootWithKey:(NSString *)string {
+    return (QRootElement *) [self elementWithKey:string];
+
 }
 @end

@@ -32,17 +32,20 @@
 @synthesize minimumDate = _minimumDate;
 @synthesize onValueChanged = _onValueChanged;
 @dynamic dateString; // Hsoi 11-Sep-2012 - added
+@synthesize minuteInterval = _minuteInterval;
 
 
 - (QDateTimeInlineElement *)init {
     self = [super init];
     _dateValue = [NSDate date];
+    self.keepSelected = YES;
     return self;
 }
 
 - (QDateTimeInlineElement *)initWithKey:(NSString *)key {
     self = [super initWithKey:key];
     _dateValue = [NSDate date];
+    self.keepSelected = YES;
     return self;
 }
 
@@ -160,10 +163,19 @@
     cell.selectionStyle = self.enabled ? UITableViewCellSelectionStyleBlue : UITableViewCellSelectionStyleNone;
     cell.textField.enabled = self.enabled;
     cell.textField.userInteractionEnabled = self.enabled;
-    cell.textLabel.textColor = self.enabled ? [UIColor blackColor] : [UIColor lightGrayColor];
     cell.imageView.image = self.image;
     cell.labelingPolicy = self.labelingPolicy;
     return cell;
+}
+
+
+- (NSString *)textValue {
+    NSTimeInterval timeInterval = self.dateValue.timeIntervalSinceNow;
+    NSInteger ti = (NSInteger)timeInterval;
+    NSInteger seconds = ti % 60;
+    NSInteger minutes = (ti / 60) % 60;
+    NSInteger hours = (ti / 3600);
+    return [NSString stringWithFormat:@"%02i:%02i:%02i", hours, minutes, seconds];
 }
 
 - (void)fetchValueIntoObject:(id)obj {
