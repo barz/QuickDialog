@@ -102,6 +102,7 @@
 
 - (void)prepareForElement:(QEntryElement *)element inTableView:(QuickDialogTableView *)tableView{
     self.textLabel.text = element.title;
+    self.labelingPolicy = element.labelingPolicy;
 
     _quickformTableView = tableView;
     _entryElement = element;

@@ -44,12 +44,6 @@
         cell = [[QPickerTableViewCell alloc] init];
     }
 
-    // Hsoi 17-Jan-2013 - this is attempting to address https://github.com/escoz/QuickDialog/issues/383 && https://www.pivotaltracker.com/story/show/42743235
-    // It seems I can work around it by doing this, which SEEMS to be the way it should work out. But I'm not sure
-    // about it all. Posted the issue to github, and we'll see. Meantime tho, this seems to get us by.
-    self.labelingPolicy = QLabelingPolicyTrimValue;
-    cell.labelingPolicy = QLabelingPolicyTrimValue;
-    
     UIPickerView *pickerView = nil;
     [cell prepareForElement:self inTableView:tableView pickerView:&pickerView];
     _pickerView = pickerView;
