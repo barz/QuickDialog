@@ -70,13 +70,14 @@
 }
 
 - (CGRect)calculateFrameForEntryElement {
-
     int extra = (self.textField.clearButtonMode == UITextFieldViewModeNever) ? 15 :10;
     if (_entryElement.title == NULL && _entryElement.image==NULL) {
         return CGRectMake(10,10,self.contentView.frame.size.width-10-extra, self.frame.size.height-20);
     }
     if (_entryElement.title == NULL && _entryElement.image!=NULL){
-        return CGRectMake( self.imageView.frame.size.width, 10, self.contentView.frame.size.width-10-self.imageView.frame.size.width-extra , self.frame.size.height-20);
+        self.imageView.image = _entryElement.image;
+        [self.imageView sizeToFit];
+        return CGRectMake( self.imageView.frame.size.width+10, 10, self.contentView.frame.size.width-10-self.imageView.frame.size.width-extra , self.frame.size.height-20);
     }
     CGFloat totalWidth = self.contentView.frame.size.width;
     CGFloat titleWidth = 0;
@@ -87,7 +88,7 @@
                 QEntryElement *q = (QEntryElement*)el; 
                 CGFloat imageWidth = q.image == NULL ? 0 : self.imageView.frame.size.width;
                 CGFloat fontSize = self.textLabel.font.pointSize == 0? 17 : self.textLabel.font.pointSize;
-                CGSize size = [((QEntryElement *)el).title sizeWithFont:[self.textLabel.font fontWithSize:fontSize] forWidth:CGFLOAT_MAX lineBreakMode:UILineBreakModeWordWrap] ;
+                CGSize size = [((QEntryElement *)el).title sizeWithFont:[self.textLabel.font fontWithSize:fontSize] forWidth:CGFLOAT_MAX lineBreakMode:NSLineBreakByWordWrapping] ;
                 CGFloat width = size.width + imageWidth;
                 if (width>titleWidth)
                     titleWidth = width;
@@ -266,6 +267,8 @@
             });
         }
 	}
+
+    [control setSelectedSegmentIndex:UISegmentedControlNoSegment];
 }
 
 - (BOOL)handleActionBarDone:(UIBarButtonItem *)doneButton {
