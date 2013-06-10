@@ -19,7 +19,15 @@
 
 }
 
-@property(nonatomic, retain) NSNumber * floatValue;
+// Hsoi 2013-06-10 - original author had declared -floatValue to be a 'float' originally but changed
+// it in commit ea57ca6581be166dbca339548b2902366677b2ee to be an 'NSNumber' to be easier on bindings.
+// Alas, this makes it rougher on dynamic typing because we now have a system where -floatValue
+// could return a float or could return an NSNumber and it's ambiguous for the compiler.
+//
+// So to work around this, I'm going to rename his stuff to be 'floatNumber'
+//
+// see: https://github.com/escoz/QuickDialog/commit/ea57ca6581be166dbca339548b2902366677b2ee#commitcomment-3390464
+@property(nonatomic, retain) NSNumber * floatNumber;
 @property(nonatomic, assign) NSUInteger fractionDigits;
 
 - (QDecimalElement *)initWithTitle:(NSString *)string value:(NSNumber *)value;
