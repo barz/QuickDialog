@@ -125,8 +125,7 @@
     _textField.secureTextEntry = _entryElement.secureTextEntry;
     _textField.clearsOnBeginEditing = _entryElement.clearsOnBeginEditing;
     _textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-    _textField.textAlignment = _entryElement.appearance.valueAlignment;
-
+    _textField.textAlignment = _entryElement.appearance.entryAlignment;
 
     _textField.returnKeyType = _entryElement.returnKeyType;
     _textField.enablesReturnKeyAutomatically = _entryElement.enablesReturnKeyAutomatically;
@@ -184,7 +183,7 @@
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 50 * USEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        [_quickformTableView scrollToRowAtIndexPath:[_quickformTableView indexForElement:_entryElement] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+        [_quickformTableView scrollToRowAtIndexPath:[_entryElement getIndexPath] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
     });
 
 
@@ -254,7 +253,7 @@
 		}
         else {
 
-            [_quickformTableView scrollToRowAtIndexPath:[_quickformTableView indexForElement:element]
+            [_quickformTableView scrollToRowAtIndexPath:[element getIndexPath]
                                        atScrollPosition:UITableViewScrollPositionMiddle
                                                animated:YES];
 
@@ -267,6 +266,10 @@
             });
         }
 	}
+    
+    if (_entryElement.keepSelected) {
+        [_quickformTableView deselectRowAtIndexPath:[_entryElement getIndexPath] animated:YES];
+    }
 
     [control setSelectedSegmentIndex:UISegmentedControlNoSegment];
 }
@@ -275,7 +278,6 @@
     [self endEditing:YES];
     [self endEditing:NO];
     [_textField resignFirstResponder];
-
     [[[UIApplication sharedApplication] keyWindow] endEditing:YES];
 
     if(_entryElement && _entryElement.delegate && [_entryElement.delegate respondsToSelector:@selector(QEntryMustReturnForElement:andCell:)]){
