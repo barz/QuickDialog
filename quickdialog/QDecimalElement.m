@@ -22,32 +22,32 @@
     NSUInteger _fractionDigits;
 }
 
-@synthesize floatNumber = _floatNumber;
+@synthesize numberValue = _numberValue;
 @synthesize fractionDigits = _fractionDigits;
 
 
 - (QDecimalElement *)initWithTitle:(NSString *)title value:(NSNumber *)value {
     self = [super initWithTitle:title Value:nil] ;
-    _floatNumber = value;
+    _numberValue = value;
     return self;
 }
 
-- (void)setFloatNumber:(NSNumber *)floatValue {
-    _floatNumber = floatValue;
-    if (_floatNumber==nil)
-        _floatNumber = @0;
+- (void)setFloatValue:(NSNumber *)floatValue {
+    _numberValue = floatValue;
+    if (_numberValue==nil)
+        _numberValue = @0;
 }
 
 - (QDecimalElement *)initWithValue:(NSNumber *)value {
     self = [super init];
-    _floatNumber = value;
+    _numberValue = value;
     return self;
 }
 
 - (QEntryElement *)init {
     self = [super init];
     if (self) {
-        _floatNumber = @0;
+        _numberValue = @0;
     }
 
     return self;
@@ -70,7 +70,7 @@
 - (void)fetchValueIntoObject:(id)obj {
 	if (_key==nil)
 		return;
-    [obj setValue:_floatNumber forKey:_key];
+    [obj setValue:_numberValue forKey:_key];
 }
 
 @end
