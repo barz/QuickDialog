@@ -12,18 +12,26 @@
 // permissions and limitations under the License.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import "QLabelElement.h"
 
-@class QElement;
-@class QSection;
+/**
+  QWebElement: pushes a simple browser that opens the URL defined in the element
+*/
 
-@protocol QuickDialogStyleProvider
+@interface QWebElement : QLabelElement {
 
--(void) cell:(UITableViewCell *)cell willAppearForElement:(QElement *)element atIndexPath:(NSIndexPath *)indexPath; 
+@protected
+    NSString *_url;
+	NSString *_html;
+}
 
-@optional
+@property(nonatomic, strong) NSString *url;
+@property(nonatomic, strong) NSString *html;
 
--(void) sectionHeaderWillAppearForSection:(QSection *)section atIndex:(NSInteger)indexPath;
--(void) sectionFooterWillAppearForSection:(QSection *)section atIndex:(NSInteger)indexPath;
+- (QWebElement *)initWithTitle:(NSString *)title url:(NSString *)url;
+- (QWebElement *)initWithTitle:(NSString *)title HTML:(NSString *)html;
+
+- (void)selected:(QuickDialogTableView *)tableView controller:(QuickDialogController *)controller indexPath:(NSIndexPath *)path;
 
 @end

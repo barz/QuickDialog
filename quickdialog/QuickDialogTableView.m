@@ -20,7 +20,6 @@
 }
 
 @synthesize root = _root;
-@synthesize styleProvider = _styleProvider;
 @synthesize deselectRowWhenViewAppears = _deselectRowWhenViewAppears;
 
 - (QuickDialogController *)controller {
@@ -34,11 +33,11 @@
         self.root = _controller.root;
         self.deselectRowWhenViewAppears = YES;
 
-        quickformDataSource = [[QuickDialogDataSource alloc] initForTableView:self];
-        self.dataSource = quickformDataSource;
+        quickDialogDataSource = [[QuickDialogDataSource alloc] initForTableView:self];
+        self.dataSource = quickDialogDataSource;
 
-        quickformDelegate = [[QuickDialogTableDelegate alloc] initForTableView:self];
-        self.delegate = quickformDelegate;
+        quickDialogDelegate = [[QuickDialogTableDelegate alloc] initForTableView:self];
+        self.delegate = quickDialogDelegate;
 
         self.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     }
@@ -68,7 +67,8 @@
     if (element.appearance.tableBackgroundView!=nil)
         self.backgroundView = element.appearance.tableBackgroundView;
 
-    self.separatorColor = element.appearance.tableSeparatorColor;
+    if (element.appearance.tableSeparatorColor!=nil)
+        self.separatorColor = element.appearance.tableSeparatorColor;
 
 }
 
@@ -119,5 +119,6 @@
 
     va_end(args);
 }
+
 
 @end

@@ -52,7 +52,8 @@
             [self bindSection:(QSection *)object toCollection:[data valueForKeyPath:valueName]];
 
         } else if ([propName isEqualToString:@"iterate"] && [object isKindOfClass:[QRootElement class]]) {
-            [self bindRootElement:(QRootElement *)object toCollection:[data valueForKeyPath:valueName]];
+            NSArray *itemsToIterate = [valueName isEqualToString:@"self"]? data : [data valueForKeyPath:valueName];
+            [self bindRootElement:(QRootElement *) object toCollection:itemsToIterate];
 
         } else if ([propName isEqualToString:@"iterateproperties"] && [object isKindOfClass:[QSection class]]) {
             [self bindSection:(QSection *)object toProperties:[data valueForKeyPath:valueName]];
@@ -124,7 +125,7 @@
 }
 
 - (void)fetchValueFromObject:(QElement *)element toData:(id)data {
-    if (element.bind == nil || ([element.bind length] == 0)) {
+     if (element.bind == nil || ([element.bind length] == 0)) {
         return;
     }
 
@@ -135,9 +136,14 @@
         NSString *valueName = [((NSString *) [bindingParams objectAtIndex:1]) stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 
         if (![propName isEqualToString:@"iterate"] && ![valueName isEqualToString:@"self"]) {
-            id value = [element valueForKeyPath:propName];
-            if (propName!= nil && value!=nil)
-                [data setValue:value forKeyPath:valueName];
+            @try {
+                id value = [element valueForKeyPath:propName];
+                if (propName!= nil && value!=nil)
+                    [data setValue:value forKeyPath:valueName];
+                }
+            @catch (NSException *exception) {
+                NSLog(@"Couldn't set property %@ on object %@", valueName, data);
+            }
         }
     }
 
