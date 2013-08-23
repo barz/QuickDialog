@@ -120,7 +120,7 @@
         // "we have no items selected... yet".
         
         NSArray* items = [itemsString componentsSeparatedByString:@","];
-        for (NSUInteger i = 0; i < [_pickerView numberOfComponents]; i++) {
+        for (NSUInteger i = 0; i < (NSUInteger)[_pickerView numberOfComponents]; i++) {
             NSString* item = nil;
             if (i < items.count) {
                 item = [items objectAtIndex:i];
