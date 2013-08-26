@@ -64,11 +64,16 @@
 
         self.backgroundView = element.appearance.tableBackgroundView;
     }
-    if (element.appearance.tableBackgroundView!=nil)
+    if (element.appearance.tableBackgroundView!=nil && !element.grouped)
         self.backgroundView = element.appearance.tableBackgroundView;
+
+    if (element.appearance.tableGroupedBackgroundView!=nil && element.grouped)
+        self.backgroundView = element.appearance.tableGroupedBackgroundView;
 
     if (element.appearance.tableSeparatorColor!=nil)
         self.separatorColor = element.appearance.tableSeparatorColor;
+    
+    self.separatorStyle = element.appearance.tableSeparatorStyle;
 
 }
 
@@ -85,6 +90,13 @@
     }
     return NULL;
 }
+
+- (void)setContentInset:(UIEdgeInsets)contentInset
+{
+    super.contentInset = contentInset;
+    self.scrollIndicatorInsets = contentInset;
+}
+
 
 - (UITableViewCell *)cellForElement:(QElement *)element {
     if (element.hidden)
