@@ -62,7 +62,7 @@ NSString * const QPickerTableViewCellIdentifier = @"QPickerTableViewCell";
     self.selected = YES;
 }
 
-- (void)prepareForElement:(QEntryElement *)element inTableView:(QuickDialogTableView *)tableView pickerView:(UIPickerView **)pickerView
+- (void)prepareForElement:(QEntryElement *)element inTableView:(QuickDialogTableView *)tableView pickerView:(UIPickerView * __autoreleasing *)pickerView
 {
     [self prepareForElement:element inTableView:tableView];
     
