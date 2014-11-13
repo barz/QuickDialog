@@ -87,9 +87,16 @@
     _webView = nil;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
+
+- (BOOL)shouldAutorotate {
     return YES;
 }
+
+
+- (NSUInteger)supportedInterfaceOrientations {
+    return ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) ? UIInterfaceOrientationMaskAll : UIInterfaceOrientationMaskAllButUpsideDown;
+}
+
 
 - (void)actionRewind {
     [_webView goBack];
