@@ -148,7 +148,7 @@
                 id value = [element valueForKeyPath:propName];
                 if (propName!= nil && value!=nil)
                     [data setValue:value forKeyPath:valueName];
-                else if (valueName != nil && value==nil)
+                else if (valueName != nil && value==nil && ![data isKindOfClass:[NSDictionary class]])
                     [data setNilValueForKey:valueName];
             }
             @catch (NSException *exception) {
