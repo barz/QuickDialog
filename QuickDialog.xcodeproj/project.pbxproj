@@ -301,7 +301,6 @@
 		D811F8E613EC907200E3922B /* LoginInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginInfo.h; path = sample/LoginInfo.h; sourceTree = SOURCE_ROOT; };
 		D811F8E713EC907200E3922B /* LoginInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginInfo.m; path = sample/LoginInfo.m; sourceTree = SOURCE_ROOT; };
 		D811F8E813EC907200E3922B /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = sample/main.m; sourceTree = SOURCE_ROOT; };
-		D811F8E913EC907200E3922B /* quickdialogexample-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "quickdialogexample-Info.plist"; path = "sample/quickdialogexample-Info.plist"; sourceTree = SOURCE_ROOT; };
 		D811F8EA13EC907200E3922B /* quickdialogexample-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "quickdialogexample-Prefix.pch"; path = "sample/quickdialogexample-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		D811F8EB13EC907200E3922B /* ExampleAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExampleAppDelegate.h; path = sample/ExampleAppDelegate.h; sourceTree = SOURCE_ROOT; };
 		D811F8EC13EC907200E3922B /* ExampleAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExampleAppDelegate.m; path = sample/ExampleAppDelegate.m; sourceTree = SOURCE_ROOT; };
@@ -532,7 +531,6 @@
 			children = (
 				D8A3DD86146045F000DE3528 /* Localizable.strings */,
 				D811F8E813EC907200E3922B /* main.m */,
-				D811F8E913EC907200E3922B /* quickdialogexample-Info.plist */,
 				D811F8EA13EC907200E3922B /* quickdialogexample-Prefix.pch */,
 			);
 			name = "Supporting Files";
